@@ -3,6 +3,8 @@ from django.http import HttpResponse
 
 from django.contrib.auth.decorators import login_required
 
+
+
 # Create your views here.
 
 def hello(request):
@@ -15,3 +17,6 @@ def hello_protected(request):
 
 def index(request):
     return HttpResponse("welcome")
+
+def register(request):
+    return HttpResponse("Register")
