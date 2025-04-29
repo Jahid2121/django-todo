@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
 from django.contrib.auth.decorators import login_required
-
+from .forms import UserRegistrationForm
+from django.contrib.auth import login
 
 
 # Create your views here.
@@ -19,4 +20,13 @@ def index(request):
     return HttpResponse("welcome")
 
 def register(request):
-    return HttpResponse("Register")
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('hello_protected')
+         
+        else:
+            form = UserRegistrationForm()
+    return render(request, 'todoapp/register.html', {'form': form})
